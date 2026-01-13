@@ -55,6 +55,7 @@ oversampling_override = 1.0
 title = "Redacto"
 position = Vector2i(200, 235)
 size = Vector2i(270, 225)
+visible = false
 unresizable = true
 keep_title_visible = true
 
