@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmk1lmlw50c1n"]
+
+[ext_resource type="Script" uid="uid://dpod74yuxq8mv" path="res://File_picker.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://vtf2nriepct3" path="res://file_processor.gd" id="2_0xm2m"]
+
+[node name="root" type="Node2D"]
+
+[node name="File picker" type="Button" parent="."]
+offset_left = 14.0
+offset_top = 526.0
+offset_right = 143.0
+offset_bottom = 580.0
+text = "Pick file"
+script = ExtResource("1_ig7tw")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.txt", "*.md")
+use_native_dialog = true
+
+[node name="File processor" type="Node2D" parent="."]
+position = Vector2(-261, -67)
+script = ExtResource("2_0xm2m")
+
+[node name="save" type="Button" parent="."]
+offset_left = 519.0
+offset_top = 526.0
+offset_right = 648.0
+offset_bottom = 580.0
+text = "Save file"
+
+[node name="text" type="RichTextLabel" parent="."]
+offset_left = 169.0
+offset_top = 51.0
+offset_right = 499.0
+offset_bottom = 564.0
+scale = Vector2(1, 0.87999994)
+focus_mode = 2
+selection_enabled = true
+
+[node name="[REDACT]" type="Button" parent="."]
+offset_left = 158.0
+offset_top = 527.0
+offset_right = 507.0
+offset_bottom = 578.0
+text = "[REDACT] Window"
+
+[node name="redaction_popup" type="Node2D" parent="."]
+position = Vector2(-261, -20)
+
+[node name="Window" type="Window" parent="redaction_popup"]
+oversampling_override = 1.0
+title = "Redacto"
+position = Vector2i(200, 235)
+size = Vector2i(270, 225)
+unresizable = true
+keep_title_visible = true
+
+[node name="redaction text" type="LineEdit" parent="redaction_popup/Window"]
+offset_left = 29.99997
+offset_top = 105.0
+offset_right = 98.56247
+offset_bottom = 136.0
+scale = Vector2(3.08, 1)
+
+[node name="redacted text" type="LineEdit" parent="redaction_popup/Window"]
+offset_left = 30.99997
+offset_top = 42.0
+offset_right = 99.56247
+offset_bottom = 73.0
+scale = Vector2(3.08, 1)
+
+[node name="Button" type="Button" parent="redaction_popup/Window"]
+offset_left = 20.0
+offset_top = 147.0
+offset_right = 100.0
+offset_bottom = 178.0
+scale = Vector2(2.9247262, 2.3849165)
+text = "[REDACT]"
+
+[node name="Redacted label" type="Label" parent="redaction_popup/Window"]
+offset_left = 73.99997
+offset_top = 18.0
+offset_right = 185.99997
+offset_bottom = 41.0
+text = "Redacted text:"
+
+[node name="Redacted label2" type="Label" parent="redaction_popup/Window"]
+offset_left = 59.99997
+offset_top = 78.0
+offset_right = 200.99997
+offset_bottom = 101.0
+text = "Replacement text:"
+
+[connection signal="pressed" from="File picker" to="File picker" method="_on_pressed"]
+[connection signal="file_selected" from="FileDialog" to="File processor" method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="save" to="File processor" method="_on_save_pressed"]
+[connection signal="pressed" from="[REDACT]" to="File processor" method="_on_redact_pressed"]
+[connection signal="pressed" from="redaction_popup/Window/Button" to="File processor" method="_on_button_pressed"]
